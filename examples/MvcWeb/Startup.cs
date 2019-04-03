@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Piranha;
 using Piranha.AspNetCore.Identity.SQLite;
@@ -21,14 +17,17 @@ namespace MvcWeb
             {
                 config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
             });
+
             services.AddPiranha();
             services.AddPiranhaApplication();
             services.AddPiranhaFileStorage();
             services.AddPiranhaImageSharp();
+
             services.AddPiranhaEF(options =>
                 options.UseSqlite("Filename=./piranha.mvcweb.db"));
             services.AddPiranhaIdentityWithSeed<IdentitySQLiteDb>(options =>
                 options.UseSqlite("Filename=./piranha.mvcweb.db"));
+
             services.AddPiranhaManager();
 
             services.AddMemoryCache();
@@ -58,6 +57,7 @@ namespace MvcWeb
                 .AddType(typeof(Models.TeaserPage))
                 .Build()
                 .DeleteOrphans();
+
             var postTypeBuilder = new Piranha.AttributeBuilder.PostTypeBuilder(api)
                 .AddType(typeof(Models.BlogPost))
                 .Build()
@@ -68,6 +68,7 @@ namespace MvcWeb
             app.UseAuthentication();
             app.UsePiranha();
             app.UsePiranhaManager();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(name: "areaRoute",

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Piranha;
 using Piranha.Models;
-using Piranha.Services;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MvcWeb.Controllers
 {
@@ -96,11 +95,13 @@ namespace MvcWeb.Controllers
                     .OrderByDescending(p => p.Published)
                     .Take(1)
                     .Select(p => p.Id);
+
                 if (latest.Count() > 0)
                 {
                     model.LatestPost = await _api.Posts
                         .GetByIdAsync<PostInfo>(latest.First());
                 }
+
                 return View("startpage", model);
             }
             return View(model);
