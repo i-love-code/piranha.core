@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Piranha;
 using Piranha.AspNetCore.Identity.SQLite;
@@ -49,6 +45,7 @@ namespace MvcWeb
             App.CacheLevel = Piranha.Cache.CacheLevel.Full;
 
             // Custom components
+            App.Blocks.Register<Models.Blocks.CustomBlockExample>();
             App.Blocks.Register<Models.Blocks.SeparatorBlock>();
 
             // Build content types
